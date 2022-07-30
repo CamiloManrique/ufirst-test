@@ -1,0 +1,18 @@
+{
+    "name": "ufirst-test-frontend",
+    "version": "1.0.0",
+    "dependencies": {
+        "chart.js": "^3.8.2",
+        "d3": "^7.6.1",
+        "dateformat": "^5.0.3"
+    },
+    "main": "js/index.js",
+    "scripts": {
+        "build": "webpack --mode=production --config webpack.config.js --env API_URL=https://ufirst-server-nloqrfciza-no.a.run.app",
+        "dev": "webpack --mode=development --watch --config webpack.config.js --env API_URL=http://localhost:8000"
+    },
+    "devDependencies": {
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0"
+    }
+}

@@ -1,11 +1,14 @@
 version: '1'
 services:
-  test:
+  server:
+    container_name: 'ufirst-server'
     build:
       context: '.'
       dockerfile: Dockerfile
+      args:
+        PORT: 8080
     ports:
-      - '8000:80'
+      - '8000:8080'
     volumes:
       - './src:/var/www/html'
 

@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    font-family: Helvetica, serif;
+}
+
+.block {
+    margin-top: 30px;
+}
+
+.small-block {
+    width: 40%;
+}
+
+.footer {
+    color: #6c6c6c;
+    margin-top: 70px;
+    font-style: italic;
+}
+@media only screen and (max-width: 576px) {
+    /* For mobile phones: */
+    .small-block {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 577px) and (max-width: 992px) {
+    .small-block {
+        width: 70%;
+    }
+}

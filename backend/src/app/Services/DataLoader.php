@@ -2,37 +2,6 @@
 
 namespace App\Services;
 
-
-function hex_dump($data, $newline='<br>')
-{
-    static $from = '';
-    static $to = '';
-
-    static $width = 16; # number of bytes per line
-
-    static $pad = '.'; # padding for non-visible characters
-
-    if ($from==='')
-    {
-        for ($i=0; $i<=0xFF; $i++)
-        {
-            $from .= chr($i);
-            $to .= ($i >= 0x20 && $i <= 0x7E) ? chr($i) : $pad;
-        }
-    }
-
-    $hex = str_split(bin2hex($data), $width*2);
-    $chars = str_split(strtr($data, $from, $to), $width);
-
-    $offset = 0;
-    foreach ($hex as $i => $line)
-    {
-        echo sprintf('%6X',$offset).' : '.implode(' ', str_split($line,2)) . ' [' . $chars[$i] . ']' . $newline;
-        $offset += $width;
-    }
-}
-
-
 class DataLoader {
 
     private $srcPath;
@@ -84,21 +53,23 @@ class DataLoader {
         $pieces = explode(' ', $request);
         $length = count($pieces);
 
-        // TODO: ASK ABOUT BEHAVIOR FOR INVALID REQUESTS!!!!
-
-        // TODO: Ask about desired behavior for missing method
-        $method = in_array($pieces[0], ['GET', 'POST', 'HEAD']) ? $pieces[0] : 'GET';
+        $method = in_array($pieces[0], ['GET', 'POST', 'HEAD']) ? $pieces[0] : null;
 
         // Assign default protocol if not included
-        // TODO: Ask desired behavior. Maybe do a Protocol simple regex
-        $protocol = 'HTTP/1.0';
+        preg_match('/HTTP\/.*/', $pieces[$length-1], $protocolMatches);
+        $protocol = $protocolMatches[0] ?? null;
 
-        // TODO: Ask about desired behavior
-        $url = $pieces[$length-1] == 'HTTP/1.0'
-            ? implode(' ', array_slice($pieces, 1, $length - 1))
-            : implode(' ', array_slice($pieces, 1));
+        $url_start = $method ? 1 : 0;
+        $url_end = $protocol ? $length - 1 : $length;
 
-        [$protocolName, $protocolVer] = explode('/', $protocol);
+        $url = array_slice($pieces, $url_start, $url_end);
+
+        if ($protocol) {
+            [$protocolName, $protocolVer] = explode('/', $protocol);
+        } else {
+            $protocolName = null;
+            $protocolVer = null;
+        }
 
         $json[] = [
             'host' => $host,

@@ -4,15 +4,17 @@ use Bramus\Router\Router;
 
 $router = new Router();
 
+// Set CORS basic headers
+$router->before('GET', '/.*', function() {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
+});
+
 $router->get('/', function () {
-    echo "Home";
+    echo "Server running!";
 });
 
 $router->get('/data', function () {
-
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Headers: *");
-
     header('Cache-Control: max-age=31536000');
     header('Content-Type: application/json');
 
