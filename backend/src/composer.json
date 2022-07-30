@@ -1,0 +1,22 @@
+{
+    "name": "vendor_name/src",
+    "description": "description",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "apple",
+            "email": "email@example.com"
+        }
+    ],
+    "require": {
+        "bramus/router": "~1.6",
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
