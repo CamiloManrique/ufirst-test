@@ -218,7 +218,7 @@ function processData(data, reducersMap) {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Distribution of responses between 200 and 1000 bytes'
+                        text: 'Distribution of responses with status code 200 and size less than 1000 bytes'
                     }
                 },
                 scales: {
