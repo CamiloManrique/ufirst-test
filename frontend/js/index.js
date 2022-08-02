@@ -32,8 +32,9 @@ function processData(data, reducersMap) {
         methods: (acc = [], d) => appendToAggregation(acc, d, 'request.method'),
         statusCodes: (acc = [], d) => appendToAggregation(acc, d, 'response_code'),
         docSize: (acc = [], d) => {
+            const status = d.response_code;
             const size = parseInt(d.document_size);
-            if(size > 200 && size < 1000) {
+            if(status === '200' && size < 1000) {
                 acc.push(d.document_size);
             }
             return acc;
